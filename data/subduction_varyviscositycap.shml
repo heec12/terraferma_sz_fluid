@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='utf-8'?>
+<harness_options>
+  <length>
+    <string_value lines="1">long</string_value>
+  </length>
+  <owner>
+    <string_value lines="1">cwilson</string_value>
+  </owner>
+  <description>
+    <string_value lines="1">Idealized subduction zone, one way coupled fluid and solid.  Fluid includes compaction. Solid has coupling depth at 100km.</string_value>
+  </description>
+  <simulations>
+    <simulation name="FluidCompactionAllSources">
+      <input_file>
+        <string_value type="filename" lines="1">fluid_compaction_outbase_p1dg/subduction.tfml</string_value>
+      </input_file>
+      <run_when name="input_changed_or_output_missing"/>
+      <number_processes>
+        <integer_value rank="0">16</integer_value>
+      </number_processes>
+      <parameter_sweep>
+        <parameter name="scale">
+          <values>
+            <string_value lines="1">2.0</string_value>
+          </values>
+        </parameter>
+        <parameter name="kfact">
+          <values>
+            <string_value lines="1">1.0</string_value>
+          </values>
+          <update>
+            <string_value type="code" language="python3" lines="20">import libspud
+libspud.set_option("/system::Fluid/coefficient::BackgroundPermeabilityFactor/type::Constant/rank::Scalar/value::WholeMesh/constant", float(kfact))</string_value>
+            <single_build/>
+          </update>
+        </parameter>
+        <parameter name="deltaeps">
+          <values>
+            <string_value lines="1">1.0</string_value>
+          </values>
+          <update>
+            <string_value type="code" language="python3" lines="20">import libspud
+libspud.set_option("/system::Fluid/coefficient::MinimumCompactionLength/type::Constant/rank::Scalar/value::WholeMesh/constant", float(deltaeps))</string_value>
+            <single_build/>
+          </update>
+        </parameter>
+        <parameter name="etamax">
+          <values>
+            <string_value lines="1">1.e21 1.e22</string_value>
+          </values>
+          <update>
+            <string_value type="code" language="python3" lines="20">import libspud
+libspud.set_option("/system::Solid/coefficient::ViscosityCap/type::Constant/rank::Scalar/value::WholeMesh/constant", float(etamax))</string_value>
+            <single_build/>
+          </update>
+        </parameter>
+        <parameter name="time">
+          <values>
+            <string_value lines="1">3</string_value>
+          </values>
+          <update>
+            <string_value type="code" language="python3" lines="20">import libspud
+for s in range(libspud.option_count("/system")):
+  for f in range(libspud.option_count("/system["+repr(s)+"]/field")):
+    option_path = "/system["+repr(s)+"]/field["+repr(f)+"]/type[0]/rank[0]/initial_condition[0]/file"
+    if libspud.have_option(option_path):
+      filename = libspud.get_option(option_path)
+      libspud.set_option(option_path, filename[:filename.rfind("_")+1]+time)</string_value>
+            <single_build/>
+          </update>
+        </parameter>
+        <parameter name="cp">
+          <values>
+            <string_value lines="1">80.0</string_value>
+          </values>
+        </parameter>
+      </parameter_sweep>
+      <required_input>
+        <filenames name="csvfiles">
+          <python>
+            <string_value type="code" language="python3" lines="20">import glob, os
+csvfiles = glob.glob(os.path.join("phase_diagrams", "*.csv"))</string_value>
+          </python>
+        </filenames>
+      </required_input>
+      <dependencies>
+        <simulation name="Solid">
+          <input_file>
+            <string_value type="filename" lines="1">solid/subduction.tfml</string_value>
+          </input_file>
+          <run_when name="input_changed_or_output_missing"/>
+          <number_processes>
+            <integer_value rank="0">16</integer_value>
+          </number_processes>
+          <parameter_sweep>
+            <parameter name="scale"/>
+            <parameter name="cp"/>
+          </parameter_sweep>
+          <required_output>
+            <filenames name="xdmffiles">
+              <python>
+                <string_value type="code" language="python3" lines="20">import os
+from buckettools.threadlibspud import *
+xdmffiles_set = set()
+for dep in _self.dependents:
+  f = os.path.join(dep.rundirectory, dep.filename+dep.ext)
+  try:
+    threadlibspud.load_options(f)
+    for s in range(libspud.option_count("/system")):
+      for f in range(libspud.option_count("/system["+repr(s)+"]/field")):
+        option_path = "/system["+repr(s)+"]/field["+repr(f)+"]/type[0]/rank[0]/initial_condition[0]/file"
+        if libspud.have_option(option_path):
+          xdmffiles_set.add(libspud.get_option(option_path))
+    threadlibspud.clear_options()
+  except:
+    pass
+xdmffiles = [name+ext for name in list(xdmffiles_set) for ext in ['.xdmf', '.h5']]</string_value>
+              </python>
+            </filenames>
+          </required_output>
+          <dependencies>
+            <run name="Mesh">
+              <input_file>
+                <string_value type="filename" lines="1">mesh/subduction.smml</string_value>
+                <spud_file/>
+              </input_file>
+              <run_when name="input_changed_or_output_missing"/>
+              <parameter_sweep>
+                <parameter name="scale">
+                  <update>
+                    <string_value type="code" language="python3" lines="20">import libspud
+libspud.set_option("/mesh/resolution_scale", float(scale))</string_value>
+                  </update>
+                </parameter>
+                <parameter name="cp">
+                  <update>
+                    <string_value type="code" language="python3" lines="20">import libspud
+libspud.set_option("/domain/location::CouplingDepth/depth", float(cp))</string_value>
+                  </update>
+                </parameter>
+              </parameter_sweep>
+              <required_output>
+                <filenames name="meshfiles">
+                  <python>
+                    <string_value type="code" language="python3" lines="20">from buckettools.threadlibspud import *
+threadlibspud.load_options(input_filename)
+basename = libspud.get_option("/io/output_base_name")
+meshfiles = [basename+ext for ext in ['.xdmf', '.h5', '_facet_ids.xdmf', '_facet_ids.h5', '_cell_ids.xdmf', '_cell_ids.h5', ".slab"]]
+threadlibspud.clear_options()</string_value>
+                  </python>
+                </filenames>
+              </required_output>
+              <commands>
+                <command name="Generate">
+                  <string_value lines="1">generate_subduction_geometry subduction.smml</string_value>
+                </command>
+                <command name="GMsh">
+                  <string_value lines="1">gmsh -2 -algo del2d subduction.geo</string_value>
+                </command>
+                <command name="Convert">
+                  <string_value lines="1">tfgmsh2xdmf subduction.msh</string_value>
+                </command>
+              </commands>
+            </run>
+          </dependencies>
+        </simulation>
+      </dependencies>
+    </simulation>
+  </simulations>
+</harness_options>

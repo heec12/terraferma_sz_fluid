@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mesh_options>
+  <geometry>
+    <dimension>
+      <integer_value rank="0">2</integer_value>
+    </dimension>
+  </geometry>
+  <io>
+    <output_base_name>
+      <string_value lines="1">subduction</string_value>
+    </output_base_name>
+  </io>
+  <slab>
+    <spline name="LeastSquaresBSpline"/>
+    <slab_surface>
+      <points>
+        <point name="Trench">
+          <real_value rank="1" dim1="dim" shape="2">0. 0.</real_value>
+        </point>
+        <point name="Point1">
+          <real_value rank="1" dim1="dim" shape="2">50. -50.</real_value>
+        </point>
+        <point name="Point2">
+          <real_value rank="1" dim1="dim" shape="2">300. -300.</real_value>
+        </point>
+        <point name="Bottom">
+          <real_value rank="1" dim1="dim" shape="2">400. -400.</real_value>
+        </point>
+      </points>
+      <layer name="SlabTop">
+        <boundary_id name="Upper" point0="Trench">
+          <integer_value rank="0">102</integer_value>
+        </boundary_id>
+        <boundary_id name="Coupling" point1="CouplingDepth">
+          <integer_value rank="0">101</integer_value>
+        </boundary_id>
+        <boundary_id name="Fluid" point0="CouplingDepth" point1="MaxFluidDepth">
+          <integer_value rank="0">100</integer_value>
+        </boundary_id>
+        <boundary_id name="Lower" point0="MaxFluidDepth" point1="DomainBase">
+          <integer_value rank="0">112</integer_value>
+        </boundary_id>
+      </layer>
+    </slab_surface>
+    <sub_slab>
+      <layer name="MORB">
+        <thickness>
+          <real_value rank="0">2.0</real_value>
+        </thickness>
+        <region_id name="Upper">
+          <integer_value rank="0">90</integer_value>
+        </region_id>
+        <region_id name="Fluid">
+          <integer_value rank="0">99</integer_value>
+        </region_id>
+        <region_id name="Lower">
+          <integer_value rank="0">103</integer_value>
+        </region_id>
+        <transect_boundary_id name="Trench" region="Upper">
+          <integer_value rank="0">108</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MohoBase" region="Fluid">
+          <integer_value rank="0">114</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MaxFluidDepth" region="Lower">
+          <integer_value rank="0">115</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="DomainBase">
+          <integer_value rank="0">107</integer_value>
+        </transect_boundary_id>
+      </layer>
+      <layer name="Gabbro">
+        <thickness>
+          <real_value rank="0">4.0</real_value>
+        </thickness>
+        <region_id name="Upper">
+          <integer_value rank="0">91</integer_value>
+        </region_id>
+        <region_id name="Fluid">
+          <integer_value rank="0">100</integer_value>
+        </region_id>
+        <region_id name="Lower">
+          <integer_value rank="0">104</integer_value>
+        </region_id>
+        <transect_boundary_id name="Trench" region="Upper">
+          <integer_value rank="0">108</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MohoBase" region="Fluid">
+          <integer_value rank="0">114</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MaxFluidDepth" region="Lower">
+          <integer_value rank="0">115</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="DomainBase">
+          <integer_value rank="0">107</integer_value>
+        </transect_boundary_id>
+      </layer>
+      <layer name="DMM">
+        <thickness>
+          <real_value rank="0">2.0</real_value>
+        </thickness>
+        <region_id name="Upper">
+          <integer_value rank="0">92</integer_value>
+        </region_id>
+        <region_id name="Fluid">
+          <integer_value rank="0">101</integer_value>
+        </region_id>
+        <region_id name="Lower">
+          <integer_value rank="0">105</integer_value>
+        </region_id>
+        <boundary_id name="Upper" point0="Trench">
+          <integer_value rank="0">105</integer_value>
+        </boundary_id>
+        <boundary_id name="Coupling" point1="CouplingDepth">
+          <integer_value rank="0">104</integer_value>
+        </boundary_id>
+        <boundary_id name="Fluid" point0="CouplingDepth" point1="MaxFluidDepth">
+          <integer_value rank="0">103</integer_value>
+        </boundary_id>
+        <boundary_id name="Lower" point0="MaxFluidDepth" point1="DomainBase">
+          <integer_value rank="0">113</integer_value>
+        </boundary_id>
+        <transect_boundary_id name="Trench" region="Upper">
+          <integer_value rank="0">108</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MohoBase" region="Fluid">
+          <integer_value rank="0">114</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MaxFluidDepth" region="Lower">
+          <integer_value rank="0">115</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="DomainBase">
+          <integer_value rank="0">107</integer_value>
+        </transect_boundary_id>
+      </layer>
+      <layer name="SlabBase">
+        <thickness>
+          <real_value rank="0">43</real_value>
+        </thickness>
+        <region_id name="Upper">
+          <integer_value rank="0">93</integer_value>
+        </region_id>
+        <region_id name="Fluid">
+          <integer_value rank="0">102</integer_value>
+        </region_id>
+        <region_id name="Lower">
+          <integer_value rank="0">106</integer_value>
+        </region_id>
+        <transect_boundary_id name="Trench" region="Upper">
+          <integer_value rank="0">108</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MohoBase" region="Fluid">
+          <integer_value rank="0">114</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="MaxFluidDepth" region="Lower">
+          <integer_value rank="0">115</integer_value>
+        </transect_boundary_id>
+        <transect_boundary_id name="DomainBase">
+          <integer_value rank="0">107</integer_value>
+        </transect_boundary_id>
+      </layer>
+    </sub_slab>
+  </slab>
+  <domain>
+    <location name="DomainSurface">
+      <resolution name="Coast">
+        <real_value rank="0">2.5</real_value>
+      </resolution>
+      <resolution name="DomainRight">
+        <real_value rank="0">10.0</real_value>
+      </resolution>
+      <boundary_id name="DomainSurface" point1="DomainSurface::DomainRight">
+        <integer_value rank="0">93</integer_value>
+      </boundary_id>
+      <boundary_id name="CrustLeft" point0="DomainSurface::Coast" point1="Trench::SlabTop">
+        <integer_value rank="0">93</integer_value>
+      </boundary_id>
+      <boundary_id name="CrustRight" point0="DomainSurface::DomainRight">
+        <integer_value rank="0">94</integer_value>
+      </boundary_id>
+      <region_id name="Crust">
+        <integer_value rank="0">86</integer_value>
+      </region_id>
+    </location>
+    <location name="Trench">
+      <resolution name="SlabTop">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+      <resolution name="SlabBase">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+    </location>
+    <location name="MohoBase">
+      <depth>
+        <real_value rank="0">40.</real_value>
+      </depth>
+      <resolution name="SlabTop">
+        <real_value rank="0">1.0</real_value>
+      </resolution>
+      <resolution name="SlabBase">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+      <resolution name="FluidRight">
+        <real_value rank="0">1.0</real_value>
+      </resolution>
+      <resolution name="DomainRight">
+        <real_value rank="0">10.0</real_value>
+      </resolution>
+      <boundary_id name="FluidTop" point0="MohoBase::SlabTop" point1="MohoBase::FluidRight">
+        <integer_value rank="0">110</integer_value>
+      </boundary_id>
+      <boundary_id name="WedgeTop" point0="MohoBase::FluidRight" point1="MohoBase::DomainRight">
+        <integer_value rank="0">99</integer_value>
+      </boundary_id>
+    </location>
+    <location name="CouplingDepth">
+      <depth>
+        <real_value rank="0">100.0</real_value>
+      </depth>
+      <resolution name="SlabTop">
+        <real_value rank="0">1.0</real_value>
+      </resolution>
+      <resolution name="SlabBase">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+    </location>
+    <location name="MaxFluidDepth">
+      <depth>
+        <real_value rank="0">350.</real_value>
+      </depth>
+      <resolution name="SlabTop">
+        <real_value rank="0">1.0</real_value>
+      </resolution>
+      <resolution name="SlabBase">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+      <boundary_id name="FluidRight" point0="MaxFluidDepth::SlabTop" point1="MohoBase::FluidRight">
+        <integer_value rank="0">111</integer_value>
+      </boundary_id>
+      <region_id name="WedgeFluid">
+        <integer_value rank="0">98</integer_value>
+      </region_id>
+    </location>
+    <location name="DomainBase">
+      <resolution name="SlabTop">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+      <resolution name="SlabBase">
+        <real_value rank="0">5.0</real_value>
+      </resolution>
+      <resolution name="DomainLeft">
+        <real_value rank="0">10.</real_value>
+      </resolution>
+      <resolution name="DomainRight">
+        <real_value rank="0">5.</real_value>
+      </resolution>
+      <boundary_id name="MantleBase" point0="DomainBase::DomainLeft" point1="DomainBase::SlabBase">
+        <integer_value rank="0">97</integer_value>
+      </boundary_id>
+      <boundary_id name="MantleLeft" point0="Trench::SlabBase" point1="DomainBase::DomainLeft">
+        <integer_value rank="0">98</integer_value>
+      </boundary_id>
+      <boundary_id name="WedgeBase" point0="DomainBase::SlabTop" point1="DomainBase::DomainRight">
+        <integer_value rank="0">96</integer_value>
+      </boundary_id>
+      <boundary_id name="WedgeRight" point0="MohoBase::DomainRight">
+        <integer_value rank="0">95</integer_value>
+      </boundary_id>
+      <region_id name="WedgeNonFluid">
+        <integer_value rank="0">88</integer_value>
+      </region_id>
+      <region_id name="MantleBeneathSlab">
+        <integer_value rank="0">89</integer_value>
+      </region_id>
+    </location>
+    <location name="DomainRight">
+      <extra_width>
+        <real_value rank="0">50.0</real_value>
+      </extra_width>
+    </location>
+  </domain>
+  <mesh>
+    <resolution_scale>
+      <real_value rank="0">1.</real_value>
+    </resolution_scale>
+    <slab_resolution_scale>
+      <real_value rank="0">0.25</real_value>
+    </slab_resolution_scale>
+  </mesh>
+</mesh_options>
