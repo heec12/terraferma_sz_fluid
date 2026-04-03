@@ -1379,7 +1379,7 @@ values[0] = std::min(values[0],dmmFmax);</string_value>
         <rank name="Scalar" rank="0">
           <value name="WholeMesh" type="value">
             <constant>
-              <real_value rank="0">0.02</real_value>
+              <real_value rank="0">1.40063</real_value>
             </constant>
           </value>
         </rank>
@@ -1403,7 +1403,7 @@ values[0] = std::min(values[0],dmmFmax);</string_value>
           <value name="WholeMesh" type="value">
             <python rank="0">
               <string_value type="code" language="python3" lines="20">from phasediagramtools import *
-morb = PhaseDiagram("vanKekenWorldCalculator21Sep09_dikeH2O.csv",method='smooth_interp')
+morb = PhaseDiagram("7oxides_strict_kom_H_uc_mean_5prctH2O_1_PT_grid_P_GPa.csv",method='smooth_interp')
 
 def val(x):
   """assuming x[0] = T, x[1] = P
@@ -1424,7 +1424,7 @@ def val(x):
         <rank name="Scalar" rank="0">
           <value name="WholeMesh" type="value">
             <constant>
-              <real_value rank="0">0.007</real_value>
+              <real_value rank="0">1.40762</real_value>
             </constant>
           </value>
         </rank>
@@ -1448,7 +1448,7 @@ def val(x):
           <value name="WholeMesh" type="value">
             <python rank="0">
               <string_value type="code" language="python3" lines="20">from phasediagramtools import *
-gabbro = PhaseDiagram("vanKekenWorldCalculator21Sep09_GabbroH2O.csv",method='smooth_interp')
+gabbro = PhaseDiagram("7oxides_strict_kom_H_lc_mean_5prctH2O_1_PT_grid_P_GPa.csv",method='smooth_interp')
 
 def val(x):
   """assuming x[0] = T, x[1] = P
