@@ -10,7 +10,7 @@ The key modification from the original Wilson et al. (2014) model is the replace
 
 All other model physics — solid rheology, compaction pressure formulation, subduction geometry — follow Wilson et al. (2014).
 
----
+
 
 ## Repository Structure
 
@@ -25,8 +25,37 @@ terraferma_sz_fluid/
 └── run_tf_sz_new_comp.slurm      # Job submission script (PACE/Inferno cluster)
 ```
 
+## Phase diagram lookup tables
 
----
+### Filename convention
+ 
+Files follow the pattern `7oxides_strict_kom_{structure}_{layer}_mean_{H2O}_PT_grid_P_GPa.csv`, where:
+ 
+- `{structure}`: crustal structure assumption
+  - `H` — **homogeneous** (upper and lower crust compositions are similar)
+  - `L` — **layered** (upper and lower crust compositions differ; planned)
+- `{layer}`: which crustal layer estimate was used
+  - `uc` — upper crust
+  - `lc` — lower crust
+- `{H2O}`: initial water content assumption
+  - `5prctH2O` — 5 wt% initial water bound
+  - `saturated` — water-saturated conditions
+ 
+### Current files
+ 
+| File | Structure | Layer | Initial H₂O | Status |
+|---|---|---|---|---|
+| `7oxides_strict_kom_H_uc_mean_saturated_PT_grid_P_GPa.csv` | Homogeneous | Upper crust | Saturated | ✓ Done |
+| `7oxides_strict_kom_H_uc_mean_5prctH2O_PT_grid_P_GPa.csv` | Homogeneous | Upper crust | 5 wt% | ✓ Done |
+| `7oxides_strict_kom_H_lc_mean_saturated_PT_grid_P_GPa.csv` | Homogeneous | Lower crust | Saturated | ✓ Done |
+| `7oxides_strict_kom_H_lc_mean_5prctH2O_PT_grid_P_GPa.csv` | Homogeneous | Lpper crust | 5 wt% | ✓ Done |
+| `7oxides_strict_kom_L_*_PT_grid_P_GPa.csv` | Layered | — | — | Planned |
+| `vanKekenWorldCalculator21Sep09_dikeH2O.csv` | — | Upper crust | — | Original Wilson et al. (2014) reference |
+| `vanKekenWorldCalculator21Sep09_GabbroH2O.csv` | — | Lower crust | — | Original Wilson et al. (2014) reference |
+| `vanKekenWorldCalculator21Sep09_PeridotiteH2O.csv` | — | Mantle | — | Original Wilson et al. (2014) reference |
+ 
+The P–T grid CSVs are output directly from the phase diagram calculations by Perple_X.
+
 
 ## Running the Simulation
 
@@ -52,7 +81,6 @@ tfsimulationharness --run subduction_varymobility.shml
 
 > **Note:** simulations are configured to run on 8 MPI processes. Adjust `--ntasks-per-node` in the SLURM script or your local `mpirun` call as needed.
 
----
 
 ## Dependencies
 
